@@ -6,7 +6,7 @@
 **Integrantes:** Coavoy Cruz, Joseph Gabriel · Cuchuyrrumi Mamani, Manuel Rodrigo · Huallpatuiro Rafaile, Brayan · Mamani Acuña, Frank Joseph
 **Fecha:** _(pendiente de fecha de entrega — ver sección 12 del plan de trabajo)_
 **Repositorio:** https://github.com/Calamar49/Comparativo-de-Familias
-**Sitio interactivo:** _(pendiente nombre de Netlify)_
+**Sitio interactivo:** https://comparador-familias.netlify.app/
 
 ---
 
@@ -333,11 +333,13 @@ anexo de referencias — ver sección "Referencias" más abajo.)_
 
 ## 7. Simulación interactiva
 
-El sitio (`web/`, publicado a `dist/` por `python -m familia3.publicar`) tiene 5 pestañas:
-Naive Bayes, MLP, Proceso Gaussiano, Comparativo y Teoría. Arranca leyendo
+El sitio está desplegado en **https://comparador-familias.netlify.app/** (`web/`, publicado a
+`dist/` por `python -m familia3.publicar` y subido como sitio estático a Netlify). Tiene 5
+pestañas: Naive Bayes, MLP, Proceso Gaussiano, Comparativo y Teoría. Arranca leyendo
 `models/registry.json`, descarga cada `.onnx`, verifica su SHA-256 y crea una sesión de ONNX
-Runtime Web; si el hash no coincide, el modelo se rechaza. Captura de pantalla y guía de uso:
-_(pendiente — agregar tras el despliegue a Netlify)_.
+Runtime Web; si el hash no coincide, el modelo se rechaza. Las capturas de cada pestaña, con el
+sitio corriendo de verdad, están en `informe/INFORME_DESARROLLO_PASO_A_PASO.docx` (figuras 7.1 a
+7.5).
 
 Diseño: paleta de "cuaderno de laboratorio" (papel cuadriculado, tinta añil, acento naranja
 óxido reservado para lo interactivo y las bandas de incertidumbre), tipografía Source Serif 4 /
@@ -381,8 +383,8 @@ normalización por lotes.
   celdas de verificación matemática de los notebooks 02, 03 y 04.
 - **Anexo B — Tablas de hiperparámetros probados:** salida de `busqueda.py` registrada en la
   ejecución de cada notebook (celdas de `GridSearchCV`/`RandomizedSearchCV`).
-- **Anexo C — Enlaces:** repositorio (GitHub), sitio (Netlify, pendiente), diapositivas
-  (pendiente).
+- **Anexo C — Enlaces:** repositorio: https://github.com/Calamar49/Comparativo-de-Familias ·
+  sitio: https://comparador-familias.netlify.app/ · diapositivas (pendiente).
 - **Anexo D — Guía de reproducción:** ver sección "Reproducir todo con un solo comando" del
   [`README.md`](../README.md).
 - **Anexo E — Matriz de trazabilidad:** [`docs/PLAN_DE_TRABAJO.md`](../docs/PLAN_DE_TRABAJO.md), sección 8.

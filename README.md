@@ -1,5 +1,7 @@
 # Comparativo de Familias de Aprendizaje Supervisado
 
+**Sitio interactivo:** https://comparador-familias.netlify.app/
+
 **Curso:** Inteligencia Artificial · **Familia 3:** modelos probabilísticos y redes neuronales multicapa · **Equipo 5**
 
 **Integrantes:**
@@ -120,4 +122,4 @@ Ver [`docs/PLAN_DE_TRABAJO.md`](docs/PLAN_DE_TRABAJO.md) (sección 8) para la ma
 
 ## Sitio en Netlify
 
-Pendiente de nombre (equipo). `dist/` se arrastra tal cual a un sitio nuevo de Netlify, con `netlify.toml` sin paso de compilación.
+**https://comparador-familias.netlify.app/** — desplegado arrastrando `dist/` a un sitio nuevo de Netlify, con `netlify.toml` sin paso de compilación.
