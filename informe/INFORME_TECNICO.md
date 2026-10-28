@@ -341,9 +341,9 @@ Runtime Web; si el hash no coincide, el modelo se rechaza. Las capturas de cada 
 sitio corriendo de verdad, están en `informe/INFORME_DESARROLLO_PASO_A_PASO.docx` (figuras 7.1 a
 7.5).
 
-Diseño: paleta de "cuaderno de laboratorio" (papel cuadriculado, tinta añil, acento naranja
-óxido reservado para lo interactivo y las bandas de incertidumbre), tipografía Source Serif 4 /
-IBM Plex Sans / IBM Plex Mono, modo oscuro automático, responsive. Aviso visible de que es una
+Diseño: paleta de "cuaderno de laboratorio" en claro (papel blanco cuadriculado, tinta azul
+marino, acento azul reservado para lo interactivo y las bandas de incertidumbre), tipografía
+Source Serif 4 / IBM Plex Sans / IBM Plex Mono, responsive. Aviso visible de que es una
 herramienta didáctica y no un diagnóstico médico.
 
 ---

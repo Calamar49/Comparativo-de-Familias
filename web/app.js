@@ -270,8 +270,8 @@ async function dibujarFronteraMoons(idModelo, idCanvas) {
     const [x, y] = caso.atributos;
     const px = ((x - xMin) / (xMax - xMin)) * ancho;
     const py = ((yMax - y) / (yMax - yMin)) * alto;
-    ctx.fillStyle = caso.etiqueta_real === 1 ? "#1d2b36" : "#f4f1ea";
-    ctx.strokeStyle = "#1d2b36";
+    ctx.fillStyle = caso.etiqueta_real === 1 ? "#13233d" : "#ffffff";
+    ctx.strokeStyle = "#13233d";
     ctx.beginPath();
     ctx.arc(px, py, 5, 0, Math.PI * 2);
     ctx.fill();
@@ -280,8 +280,8 @@ async function dibujarFronteraMoons(idModelo, idCanvas) {
 }
 
 function colorDeProbabilidad(p1) {
-  // de papel (p≈0) a señal naranja (p≈1), pasando por tinta en el medio: sin azul-púrpura.
-  const papel = [244, 241, 234], tinta = [120, 110, 95], senal = [193, 68, 14];
+  // de papel (p≈0) a señal azul (p≈1), pasando por tinta en el medio.
+  const papel = [255, 255, 255], tinta = [100, 115, 135], senal = [20, 88, 201];
   const mezclar = (a, b, t) => Math.round(a + (b - a) * t);
   if (p1 < 0.5) {
     const t = p1 / 0.5;
@@ -335,7 +335,7 @@ async function dibujarBandaSeno() {
   const aPy = (y) => ((yMax - y) / (yMax - yMin)) * alto;
 
   ctx.clearRect(0, 0, ancho, alto);
-  ctx.fillStyle = "#f4f1ea";
+  ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, ancho, alto);
 
   // banda ±2σ
@@ -343,20 +343,20 @@ async function dibujarBandaSeno() {
   xs.forEach((x, i) => ctx.lineTo(aPx(x), aPy(medias[i] + 2 * sigmas[i])));
   for (let i = xs.length - 1; i >= 0; i--) ctx.lineTo(aPx(xs[i]), aPy(medias[i] - 2 * sigmas[i]));
   ctx.closePath();
-  ctx.fillStyle = "rgba(193, 68, 14, 0.18)";
+  ctx.fillStyle = "rgba(20, 88, 201, 0.14)";
   ctx.fill();
 
   // media
   ctx.beginPath();
   xs.forEach((x, i) => (i === 0 ? ctx.moveTo(aPx(x), aPy(medias[i])) : ctx.lineTo(aPx(x), aPy(medias[i]))));
-  ctx.strokeStyle = "#c1440e";
+  ctx.strokeStyle = "#1458c9";
   ctx.lineWidth = 2;
   ctx.stroke();
 
   // f(x) real
   ctx.beginPath();
   xs.forEach((x, i) => (i === 0 ? ctx.moveTo(aPx(x), aPy(Math.sin(x))) : ctx.lineTo(aPx(x), aPy(Math.sin(x)))));
-  ctx.strokeStyle = "#1d2b36";
+  ctx.strokeStyle = "#13233d";
   ctx.setLineDash([3, 4]);
   ctx.lineWidth = 1;
   ctx.stroke();
@@ -364,7 +364,7 @@ async function dibujarBandaSeno() {
 
   // datos de entrenamiento
   const [xTrain, yTrain] = await cargarPuntosEntrenamientoSeno();
-  ctx.fillStyle = "#1d2b36";
+  ctx.fillStyle = "#13233d";
   xTrain.forEach((x, i) => {
     ctx.beginPath();
     ctx.arc(aPx(x), aPy(yTrain[i]), 2.5, 0, Math.PI * 2);

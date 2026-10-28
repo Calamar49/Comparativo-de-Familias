@@ -74,12 +74,8 @@
 }
 :root[data-theme="dark"] .terminal-bloque,
 @media (prefers-color-scheme: dark) { .terminal-bloque { background: #0d0f0d; } }
-.terminal-bloque .linea-prompt { color: var(--senal); }
-.terminal-bloque .linea-ok { color: #8fcf9f; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .terminal-bloque { background: #0d0f0d; }
-}
-:root[data-theme="dark"] .terminal-bloque { background: #0d0f0d; }
+.terminal-bloque .linea-prompt { color: #6fa8ff; }
+.terminal-bloque .linea-ok { color: #7fd99a; }
 
 .diagrama {
   background: var(--papel-oscuro);
