@@ -85,7 +85,7 @@ Cada modelo puede tener **varias versiones** (por ejemplo v1 con hiperparámetro
 - El navegador **consume** modelos ya entrenados; **no entrena**. Por eso las fronteras y bandas se dibujan consultando el modelo sobre una malla de puntos, y el usuario interactúa con las entradas, no con los datos de entrenamiento.
 - La precisión de ONNX es de 32 bits (diferencias del orden de 1e-5 frente a Python), y se informa como tolerancia.
 - Solo se exportan los núcleos del GPR cuya paridad se comprobó (RBF y Matérn). El GPR guarda sus datos de entrenamiento dentro del archivo, y por eso se limita a ≤ 2 000 filas (tamaño y costo de predicción O(n)).
-- Extra **opcional** si sobra tiempo: un «laboratorio» que entrene en vivo con JavaScript escrito a mano (clic para colocar puntos). Queda fuera del camino crítico; si se hace, se declara aparte y se verifica contra scikit-learn.
+- **Decisión del equipo:** no se entrena en el navegador; la web solo consume modelos entrenados en Python.
 
 ---
 
@@ -318,4 +318,4 @@ Reparto sugerido si son 4 personas: una por modelo (NB, MLP, GPR) con su noteboo
 1. Nombres de los integrantes del equipo 5 (para la carátula) y confirmar el docente y el ciclo.
 2. Fecha de entrega y si hay exposición oral.
 3. Nombre deseado para el sitio de Netlify.
-4. (Resuelto) La web consume los modelos entrenados en Python, exportados a ONNX. Solo queda confirmar con el docente si además quiere un laboratorio que **entrene** en el navegador (extra opcional).
+4. (Resuelto) La web consume los modelos entrenados en Python, exportados a ONNX, y **no entrena en el navegador** (decisión del equipo).
