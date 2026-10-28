@@ -12,7 +12,7 @@
 |---|---|
 | Informe PDF con documento técnico | `informe/INFORME_TECNICO.pdf` (y .docx editable) |
 | Código fuente (repositorio / Python) | Repositorio de GitHub con paquete `src/`, notebooks, tests y CI |
-| Simulación interactiva | Sitio web en Netlify donde se juegan los 3 modelos en el navegador |
+| Simulación interactiva | Sitio web en Netlify que **consume los modelos ya entrenados en Python** (archivos ONNX registrados y verificados) y deja interactuar con ellos en el navegador |
 
 | Criterio de la rúbrica | Peso | Cómo lo cubrimos | Dónde se ve |
 |---|---|---|---|
@@ -45,11 +45,47 @@ Todo es reproducible sin credenciales ni descargas manuales (salvo California Ho
 - Semilla fija global (`SEED = 42`) y repetición con varias semillas para dar media ± desviación estándar.
 - Prueba final **una sola vez** por modelo; los intervalos de confianza se estiman por *bootstrap*.
 
-### 1.3 Cómo será la simulación interactiva
-Opción elegida: **los tres modelos programados desde cero en JavaScript**, corriendo en el navegador, sin servidor.
-- Por qué: muestra las ecuaciones funcionando (suma puntos en rigor matemático), carga al instante y es 100 % estática (Netlify).
-- Riesgo: que el código JavaScript no coincida con scikit-learn. **Mitigación:** una prueba de paridad. Python exporta casos de prueba a JSON y un script de Node comprueba que el JavaScript da lo mismo (mismo estilo que la paridad Keras/ONNX de X-ray).
-- Alternativa descartada: Pyodide (scikit-learn real en el navegador). Descarga 20 a 30 MB, tarda en cargar y no deja ver la matemática. Queda como plan B si el JS se complicara.
+### 1.3 Requisito: la web consume los modelos entrenados (ciclo de vida ML-Ops)
+La simulación **no reimplementa** los modelos: usa exactamente los que se entrenaron y evaluaron en Python. El camino, igual que en el proyecto X-ray, es:
+
+```
+entrenar y elegir hiperparámetros (Python, scikit-learn)
+        ↓
+exportar a ONNX (skl2onnx) + prueba de paridad Python ↔ ONNX
+        ↓
+registrar en models/registry.json (versión, SHA-256, métricas, hiperparámetros, dataset, semilla, fecha)
+        ↓
+publicar: dist/ = sitio web + registry.json + modelos/*.onnx
+        ↓
+la web lee el registro → descarga el .onnx → verifica el SHA-256 → carga con ONNX Runtime Web → predice
+```
+
+**Reglas del consumo (las mismas de X-ray):** la página no lleva escrito el modelo, su versión ni sus métricas; todo sale del registro. Si el hash no coincide, el modelo se rechaza. Publicar una versión nueva es registrarla y volver a generar `dist/`; la página no se toca. Se puede fijar una versión con `?version=`.
+
+**Modelos que se registran (todos entrenados en Python):**
+| Id en el registro | Modelo | Datos | Entrada → salida |
+|---|---|---|---|
+| `nb_cancer` | Naive Bayes Gaussiano | Breast Cancer, 30 atributos | 30 números → clase y probabilidades |
+| `mlp_cancer` | Pipeline (escalado + MLP) | Breast Cancer | 30 números → clase y probabilidades (el escalado va **dentro** del ONNX) |
+| `gpr_diabetes` | Proceso Gaussiano | Diabetes, 10 atributos | 10 números → media y desviación estándar |
+| `nb_moons`, `mlp_moons` | NB y MLP | `make_moons` 2D | 2 números → probabilidades (para dibujar fronteras) |
+| `gpr_seno1d` | Proceso Gaussiano | f(x) = sin(x) + ruido | x → media y σ (para dibujar la banda ±2σ) |
+
+Cada modelo puede tener **varias versiones** (por ejemplo v1 con hiperparámetros por defecto y v2 ajustada con la búsqueda), y la web permite compararlas.
+
+**Viabilidad comprobada (prueba hecha el 28/10/2026 con scikit-learn 1.9, skl2onnx y ONNX Runtime Web 1.22):**
+| Modelo | ¿Exporta a ONNX? | Diferencia máxima frente a Python | ¿Corre en el navegador? |
+|---|---|---|---|
+| Naive Bayes Gaussiano | Sí | 5e-7 (Python ↔ ONNX); 0 en el navegador | Sí |
+| MLP (con escalado) | Sí | 3e-7 (Python ↔ ONNX); 2e-7 en el navegador | Sí |
+| GPR con núcleo RBF o Matérn + ruido (media y σ) | Sí | 1e-5 a 7e-5; 1,6e-5 en el navegador | Sí |
+| GPR con núcleo RationalQuadratic | Exporta, **pero no coincide** (error de 0,2 en la media) | | **Se excluye de la exportación** |
+
+**Límites a documentar en el informe (honestidad técnica):**
+- El navegador **consume** modelos ya entrenados; **no entrena**. Por eso las fronteras y bandas se dibujan consultando el modelo sobre una malla de puntos, y el usuario interactúa con las entradas, no con los datos de entrenamiento.
+- La precisión de ONNX es de 32 bits (diferencias del orden de 1e-5 frente a Python), y se informa como tolerancia.
+- Solo se exportan los núcleos del GPR cuya paridad se comprobó (RBF y Matérn). El GPR guarda sus datos de entrenamiento dentro del archivo, y por eso se limita a ≤ 2 000 filas (tamaño y costo de predicción O(n)).
+- Extra **opcional** si sobra tiempo: un «laboratorio» que entrene en vivo con JavaScript escrito a mano (clic para colocar puntos). Queda fuera del camino crítico; si se hace, se declara aparte y se verifica contra scikit-learn.
 
 ---
 
@@ -59,7 +95,8 @@ Opción elegida: **los tres modelos programados desde cero en JavaScript**, corr
 Comparativo-de-Familias/
 ├── README.md                  # qué es, cómo reproducir, enlaces, tabla de resultados
 ├── requirements.txt           # versiones fijas
-├── .github/workflows/ci.yml   # tests + build del sitio + parity JS
+├── .github/workflows/ci.yml   # tests + paridad ONNX + build del sitio + verificar_release
+├── models/                    # registry.json y los .onnx registrados (con su SHA-256)
 ├── data/                      # cachés pequeños y README de procedencia
 ├── src/familia3/
 │   ├── datos.py               # carga, particiones, semillas
@@ -68,7 +105,9 @@ Comparativo-de-Familias/
 │   ├── metricas.py            # clasificación, regresión, calibración, bootstrap
 │   ├── graficos.py            # fronteras, curvas, importancia, GPR con banda
 │   ├── desde_cero.py          # NB, MLP y GPR en NumPy (verificación matemática)
-│   └── exportar_web.py        # fixtures JSON para la paridad con el JS
+│   ├── exportar.py            # sklearn → ONNX (skl2onnx) + paridad + registro en registry.json
+│   ├── publicar.py            # arma dist/: web + registry.json + modelos/*.onnx (solo librería estándar)
+│   └── verificar_release.py   # comprobaciones: hashes, versión vigente, nada escrito a mano en la web
 ├── notebooks/
 │   ├── 01_datos_y_protocolo.ipynb
 │   ├── 02_naive_bayes_gaussiano.ipynb
@@ -76,7 +115,7 @@ Comparativo-de-Familias/
 │   ├── 04_regresion_proceso_gaussiano.ipynb
 │   └── 05_comparativo_y_aplicaciones.ipynb
 ├── tests/                     # pytest: fuga, matemática vs sklearn, métricas
-├── web/                       # sitio de la simulación (HTML + JS + datos)
+├── web/                       # sitio: HTML + JS que lee registry.json y consume los .onnx
 ├── informe/                   # markdown fuente, figuras, build a DOCX/PDF
 ├── docs/                      # diapositivas, acta de decisiones, plan
 └── reports/figuras/           # PNG de todo lo que va al informe
@@ -168,17 +207,19 @@ Cada caso se acompaña de una referencia académica o técnica real (no inventad
 
 ---
 
-## 6. Fase D · Simulación interactiva (sitio en Netlify)
+## 6. Fase D · Simulación interactiva: la web consume los modelos entrenados (Netlify)
 
-**Pestañas del sitio** (todo en el navegador, sin servidor):
-1. **Naive Bayes:** el usuario hace clic para colocar puntos de 2 o 3 clases; se dibujan las gaussianas por clase, la frontera y el mapa de probabilidad; controles de `var_smoothing`.
-2. **MLP:** capas y neuronas ajustables, activación, tasa de aprendizaje y `α`; entrena en vivo, con curva de pérdida y frontera que se actualiza por época.
-3. **Proceso Gaussiano:** clic para colocar puntos; núcleo (RBF, Matérn, RQ), longitud de escala y ruido ajustables; se ve la media, la banda ±2σ y muestras de la posterior.
-4. **Comparativo:** los mismos datos sintéticos con NB y MLP en paralelo (con GPR en su pestaña, porque es regresión), y la tabla de resultados reales de los notebooks.
+**Arranque de la página** (mismo patrón que X-ray): lee `registry.json` → elige la versión vigente (o `?version=`) → descarga cada `.onnx` → verifica el SHA-256 → crea la sesión de ONNX Runtime Web → muestra una insignia «modelo vX · hash verificado». Si algo falla, lo dice con claridad.
+
+**Pestañas del sitio** (todo en el navegador, sin servidor; los modelos son los entrenados en Python):
+1. **Naive Bayes:** elegir un paciente de ejemplo del conjunto de prueba o mover los atributos principales con deslizadores; el modelo `nb_cancer` devuelve clase y probabilidades. Con `nb_moons` se dibuja la **frontera y el mapa de probabilidad** consultando el modelo sobre una malla 2D. Se muestran medias y varianzas por clase leídas del registro.
+2. **MLP:** lo mismo con `mlp_cancer` y `mlp_moons`; se muestra la arquitectura y la curva de pérdida del entrenamiento (guardada en el registro), y se comparan las versiones v1 y v2.
+3. **Proceso Gaussiano:** con `gpr_diabetes`, deslizadores de los atributos y predicción **media ± 2σ**; con `gpr_seno1d`, curva ajustada y **banda de incertidumbre** que crece donde no hay datos, dibujada consultando el modelo.
+4. **Comparativo:** el mismo paciente evaluado por NB y MLP en paralelo, con sus probabilidades y la tabla de métricas del registro (test, intervalos); aviso sobre calibración.
 5. **Teoría:** las ecuaciones de cada modelo con su explicación breve (renderizadas, p. ej. con KaTeX) y enlaces al informe y al repositorio.
 
-**Calidad:** diseño cuidado, funciona en móvil, modo oscuro, accesible por teclado, aviso de la parte "didáctica". Paridad con scikit-learn verificada por pruebas (`web/tests/paridad.mjs`) en el CI.
-**Despliegue:** carpeta `dist/` arrastrada a **un sitio nuevo de Netlify** (para no pisar el de X-ray, que ya está en `californication1`). Hace falta que ustedes elijan el nombre del sitio.
+**Calidad:** diseño cuidado, funciona en móvil, modo oscuro, accesible por teclado, y un aviso de que es una herramienta didáctica y no un diagnóstico médico. Pruebas: (a) en Python, paridad scikit-learn ↔ ONNX; (b) en el navegador o Node, los mismos casos de prueba exportados deben dar lo mismo (ya comprobado de forma manual para los 3 modelos); (c) `verificar_release.py` comprueba que la página no tiene modelo, versión ni umbral escritos a mano.
+**Despliegue:** carpeta `dist/` arrastrada a **un sitio nuevo de Netlify** (para no pisar el de X-ray, que ya está en `californication1`), con un `netlify.toml` sin compilación y `_headers` como en X-ray. Hace falta que ustedes elijan el nombre del sitio.
 
 ---
 
@@ -220,7 +261,8 @@ Anexos: derivaciones completas · tablas de hiperparámetros probados · enlaces
 | Comparativa entre los 3 modelos | notebook 05, informe cap. 5 |
 | Informe PDF | `informe/INFORME_TECNICO.pdf` |
 | Código fuente en repositorio | GitHub: Calamar49/Comparativo-de-Familias |
-| Simulación interactiva | Sitio Netlify |
+| Simulación interactiva | Sitio Netlify (sección 6) |
+| **El modelo entrenado debe poder consumirse en la aplicación web** | `exportar.py` → `models/registry.json` + `.onnx` → `publicar.py` → la web los descarga, verifica el hash y predice; informe cap. 7 |
 
 ---
 
@@ -232,7 +274,8 @@ Anexos: derivaciones completas · tablas de hiperparámetros probados · enlaces
 | 1 | `src/` base: datos, protocolo, métricas; notebook 01 | Medio |
 | 2 | Notebooks 02, 03 y 04 con sus implementaciones desde cero y tests de matemática | **Grande** |
 | 3 | Notebook 05, tablas finales, pruebas estadísticas | Medio |
-| 4 | Sitio web + implementación JS + paridad | **Grande** |
+| 4a | Exportar a ONNX, registrar en `registry.json` y probar paridad Python ↔ ONNX | Medio |
+| 4b | Sitio web que lee el registro y consume los modelos; `publicar.py` y `verificar_release.py` | **Grande** |
 | 5 | Informe, figuras definitivas, diapositivas | **Grande** |
 | 6 | Revisión cruzada contra rúbrica, CI en verde, despliegue, publicación | Pequeño |
 
@@ -247,7 +290,10 @@ Reparto sugerido si son 4 personas: una por modelo (NB, MLP, GPR) con su noteboo
 | GPR muy lento con muchos datos | Submuestrear a ≤ 2 000, justificarlo y mostrar la curva de costo |
 | MLP no converge o da avisos | Escalado, `max_iter` alto, parada temprana, varias semillas, informar la variabilidad |
 | Resultados "demasiado buenos" por fuga | Pipelines, validación cruzada solo en entrenamiento, prueba final única, test de fuga |
-| JavaScript distinto de scikit-learn | Fixtures y prueba de paridad en el CI |
+| ONNX distinto de scikit-learn, o núcleo del GPR no soportado | Prueba de paridad Python ↔ ONNX en el CI; solo se exportan los núcleos verificados (RBF y Matérn; RationalQuadratic queda excluido) |
+| Un operador de ONNX no corre en el navegador | Ya verificado con los 3 modelos en ONNX Runtime Web 1.22; el CI repite la prueba con los casos exportados |
+| Modelo del GPR pesado o lento en el navegador | Limitar a ≤ 2 000 filas, medir tamaño y tiempo de predicción e informarlos |
+| La web usa un modelo distinto del evaluado | Registro con SHA-256, verificación en el navegador y `verificar_release.py` |
 | Informe demasiado largo o desordenado | Plantilla fija, matriz de trazabilidad, revisión con la rúbrica en la mano |
 | Ecuaciones mal escritas | Revisión cruzada y comprobación numérica contra la implementación desde cero |
 | Mala calibración mal interpretada | Curvas de calibración y Brier; explicar por qué NB y MLP difieren |
@@ -259,7 +305,8 @@ Reparto sugerido si son 4 personas: una por modelo (NB, MLP, GPR) con su noteboo
 - [ ] El experimento de atípicos, la evidencia de interpretabilidad y las curvas de costo están en el notebook 05 y en el informe.
 - [ ] Cada modelo tiene: formulación, criterio, algoritmo, supuestos, implementación desde cero verificada, búsqueda de hiperparámetros, métricas, gráficos y caso de uso.
 - [ ] Los 5 notebooks se ejecutan de principio a fin sin errores, con salidas guardadas.
-- [ ] `pytest` y la paridad JS en verde, y CI en verde en GitHub.
+- [ ] `pytest`, la paridad Python ↔ ONNX y `verificar_release.py` en verde, y CI en verde en GitHub.
+- [ ] **Los 3 modelos entrenados están registrados y la web los descarga, verifica y usa**, sin modelo, versión ni umbral escritos a mano en la página.
 - [ ] El informe PDF cubre todo el PDF de la actividad (matriz de trazabilidad completa) y cita fuentes reales.
 - [ ] El sitio de Netlify funciona en escritorio y móvil, y se explica en el informe.
 - [ ] Repositorio con README claro, enlaces correctos (informe, web, diapositivas) y una sola orden para reproducir.
@@ -271,4 +318,4 @@ Reparto sugerido si son 4 personas: una por modelo (NB, MLP, GPR) con su noteboo
 1. Nombres de los integrantes del equipo 5 (para la carátula) y confirmar el docente y el ciclo.
 2. Fecha de entrega y si hay exposición oral.
 3. Nombre deseado para el sitio de Netlify.
-4. Si el docente quiere que la simulación use los modelos reales de Python (Pyodide) o si basta con una versión interactiva programada en JavaScript.
+4. (Resuelto) La web consume los modelos entrenados en Python, exportados a ONNX. Solo queda confirmar con el docente si además quiere un laboratorio que **entrene** en el navegador (extra opcional).
