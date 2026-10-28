@@ -1,6 +1,6 @@
 # Comparativo de Familias de Aprendizaje Supervisado
 
-**Sitio interactivo:** https://comparador-familias.netlify.app/
+**Sitio interactivo:** https://comparador-familias.netlify.app/ · **Bitácora de construcción (infografía paso a paso):** https://comparador-familias.netlify.app/proceso.html
 
 **Curso:** Inteligencia Artificial · **Familia 3:** modelos probabilísticos y redes neuronales multicapa · **Equipo 5**
 

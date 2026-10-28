@@ -95,6 +95,7 @@ a { color: var(--senal); }
   border-radius: var(--radio);
   cursor: pointer;
 }
+a.pestanas__btn { text-decoration: none; display: inline-flex; align-items: center; }
 .pestanas__btn[aria-current="page"] {
   background: var(--tinta);
   color: var(--papel);

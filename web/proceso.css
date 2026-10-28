@@ -1,0 +1,128 @@
+/* Página "Bitácora de construcción": extiende estilo.css con los componentes
+   propios de este registro paso a paso (entradas numeradas, diagramas en SVG,
+   bloques de comando). Misma identidad de cuaderno de laboratorio, sin tokens
+   nuevos. */
+
+.bitacora-intro {
+  max-width: 680px;
+  padding: 1.6rem 5vw 0.4rem;
+  margin: 0 auto;
+}
+.bitacora-intro p { font-size: 1.02rem; }
+.bitacora-intro .aviso { margin-top: 1rem; }
+
+.bitacora {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0.5rem 5vw 3rem;
+}
+
+.entrada {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 0 1.6rem;
+  padding: 2.4rem 0;
+  border-top: 1px solid var(--borde);
+}
+.entrada:first-child { border-top: none; }
+
+.entrada__numero {
+  font-family: var(--mono);
+  font-size: 2.1rem;
+  font-weight: 500;
+  color: var(--senal);
+  line-height: 1;
+  padding-top: 0.15rem;
+}
+.entrada__numero small {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--tinta-suave);
+  letter-spacing: 0.04em;
+  margin-top: 0.3rem;
+  font-weight: 400;
+}
+
+.entrada__cuerpo h2 { margin-bottom: 0.5rem; }
+.entrada__cuerpo > p:first-of-type { max-width: 640px; }
+
+.entrada__layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1.4rem;
+  align-items: start;
+  margin-top: 1.1rem;
+}
+.entrada__layout--inversa { grid-template-columns: 1fr 1.1fr; }
+.entrada__layout--inversa > :first-child { order: 2; }
+@media (max-width: 760px) {
+  .entrada__layout, .entrada__layout--inversa { grid-template-columns: 1fr; }
+  .entrada__layout--inversa > :first-child { order: 0; }
+}
+
+.terminal-bloque {
+  background: var(--tinta);
+  color: var(--papel);
+  border-radius: var(--radio);
+  padding: 0.9rem 1.1rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: 0.9rem;
+}
+:root[data-theme="dark"] .terminal-bloque,
+@media (prefers-color-scheme: dark) { .terminal-bloque { background: #0d0f0d; } }
+.terminal-bloque .linea-prompt { color: var(--senal); }
+.terminal-bloque .linea-ok { color: #8fcf9f; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .terminal-bloque { background: #0d0f0d; }
+}
+:root[data-theme="dark"] .terminal-bloque { background: #0d0f0d; }
+
+.diagrama {
+  background: var(--papel-oscuro);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1rem;
+}
+.diagrama svg { width: 100%; height: auto; display: block; }
+.diagrama__pie { font-family: var(--mono); font-size: 0.72rem; color: var(--tinta-suave); margin: 0.6rem 0 0; }
+
+.nota-tecnica {
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--papel-oscuro);
+  padding: 0.9rem 1.1rem;
+  margin-top: 1rem;
+  font-size: 0.92rem;
+}
+.nota-tecnica strong { color: var(--tinta); }
+
+.lista-notebooks { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.lista-notebooks li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 0.9rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px dashed var(--borde);
+  font-size: 0.92rem;
+}
+.lista-notebooks li:last-child { border-bottom: none; padding-bottom: 0; }
+.lista-notebooks code { font-size: 0.78rem; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+
+.resultado-destacado {
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  color: var(--senal);
+  margin-top: 0.8rem;
+}
+
+.cierre {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 5vw 3rem;
+}
+.cierre .tarjeta { display: flex; gap: 1.6rem; flex-wrap: wrap; align-items: baseline; }
+.cierre a { font-family: var(--mono); font-size: 0.88rem; }

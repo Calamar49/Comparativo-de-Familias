@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bitácora de construcción &middot; Comparativo de familias</title>
+<meta name="description" content="Cómo se construyó este sitio y los seis modelos que consume: del repositorio vacío al despliegue en Netlify, paso a paso.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 fill=%22%23f4f1ea%22/><path d=%22M3 18 L8 9 L13 14 L21 4%22 stroke=%22%23c1440e%22 stroke-width=%222%22 fill=%22none%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="proceso.css">
+</head>
+<body>
+
+<header class="cabecera">
+  <div class="cabecera__marca">
+    <span class="cabecera__indice">bitácora — 9 entradas</span>
+    <h1>Cómo se construyó esto<br><span class="cabecera__sub">Del repositorio vacío a los seis modelos corriendo en tu navegador</span></h1>
+  </div>
+  <nav class="pestanas" aria-label="Navegación del sitio">
+    <a href="index.html" class="pestanas__btn">Simulador</a>
+    <a href="proceso.html" class="pestanas__btn" aria-current="page">Bitácora de construcción</a>
+    <a href="../informe/INFORME_TECNICO.md" class="pestanas__btn">Informe técnico</a>
+  </nav>
+</header>
+
+<div class="bitacora-intro">
+  <p>Esta página documenta, en el orden real en que ocurrió, cómo se hizo este sitio y los seis
+  modelos que consume: Naive Bayes Gaussiano, un Perceptrón Multicapa y dos Procesos Gaussianos,
+  entrenados en Python y exportados a ONNX para correr aquí mismo, en tu navegador. Cada entrada
+  corresponde a un capítulo del informe de desarrollo, con los comandos, las cifras y las
+  decisiones tal como salieron — incluido lo que falló primero.</p>
+  <p class="aviso">Las métricas que ves abajo no están escritas a mano: son las mismas que lee la
+  pestaña <a href="index.html#comparativo">Comparativo</a> del simulador, leídas de
+  <code>models/registry.json</code>.</p>
+</div>
+
+<main class="bitacora">
+
+  <!-- 01 ------------------------------------------------------------- -->
+  <article class="entrada">
+    <div class="entrada__numero">01<small>clonar</small></div>
+    <div class="entrada__cuerpo">
+      <h2>Clonar el repositorio y leer el plan de trabajo</h2>
+      <p>El equipo partió de un repositorio con un único documento real: <code>docs/PLAN_DE_TRABAJO.md</code>,
+      la guía de la actividad con 12 secciones (protocolo de evaluación, modelos asignados,
+      exportación a ONNX, matriz de trazabilidad contra la rúbrica). Todo lo que sigue es ese plan
+      ejecutado sección por sección, no una estructura inventada aparte.</p>
+      <div class="terminal-bloque">
+<span class="linea-prompt">$</span> git clone https://github.com/Calamar49/Comparativo-de-Familias.git
+<span class="linea-prompt">$</span> cd Comparativo-de-Familias
+<span class="linea-prompt">$</span> python -m venv .venv &amp;&amp; .venv\Scripts\activate
+<span class="linea-prompt">$</span> pip install -r requirements.txt &amp;&amp; pip install -e .
+      </div>
+    </div>
+  </article>
+
+  <!-- 02 ------------------------------------------------------------- -->
+  <article class="entrada">
+    <div class="entrada__numero">02<small>paquete</small></div>
+    <div class="entrada__cuerpo">
+      <h2>Un paquete Python instalable, no un notebook suelto</h2>
+      <p><code>src/familia3/</code> se instaló con <code>pip install -e .</code> para que los
+      notebooks, los tests y la web compartieran exactamente el mismo código de carga de datos,
+      pipelines y métricas — nada duplicado ni copiado entre archivos.</p>
+      <div class="entrada__layout">
+        <div class="diagrama">
+          <svg viewBox="0 0 520 300" role="img" aria-label="Dependencias entre módulos del paquete familia3">
+            <style>
+              .caja{fill:var(--papel);stroke:var(--borde);stroke-width:1.2;rx:3;}
+              .caja-centro{fill:var(--papel);stroke:var(--senal);stroke-width:1.4;rx:3;}
+              .rotulo{font-family:var(--mono);font-size:11px;fill:var(--tinta);}
+              .flecha{stroke:var(--tinta-suave);stroke-width:1.2;fill:none;marker-end:url(#punta);}
+            </style>
+            <defs>
+              <marker id="punta" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="var(--tinta-suave)"/>
+              </marker>
+            </defs>
+            <rect class="caja" x="14" y="20" width="110" height="34"/>
+            <text class="rotulo" x="24" y="41">datos.py</text>
+            <rect class="caja" x="14" y="130" width="110" height="34"/>
+            <text class="rotulo" x="24" y="151">desde_cero.py</text>
+            <rect class="caja-centro" x="200" y="75" width="120" height="34"/>
+            <text class="rotulo" x="210" y="96">pipelines.py</text>
+            <rect class="caja" x="200" y="20" width="120" height="34"/>
+            <text class="rotulo" x="210" y="41">busqueda.py</text>
+            <rect class="caja" x="396" y="20" width="110" height="34"/>
+            <text class="rotulo" x="406" y="41">metricas.py</text>
+            <rect class="caja" x="396" y="75" width="110" height="34"/>
+            <text class="rotulo" x="406" y="96">graficos.py</text>
+            <rect class="caja" x="200" y="175" width="120" height="34"/>
+            <text class="rotulo" x="210" y="196">exportar.py</text>
+            <rect class="caja" x="200" y="230" width="120" height="34"/>
+            <text class="rotulo" x="210" y="251">publicar.py</text>
+            <path class="flecha" d="M124,37 L200,37"/>
+            <path class="flecha" d="M124,45 Q160,92 200,92"/>
+            <path class="flecha" d="M124,140 Q170,140 200,100"/>
+            <path class="flecha" d="M320,92 L396,92"/>
+            <path class="flecha" d="M320,37 L396,37"/>
+            <path class="flecha" d="M260,109 L260,175"/>
+            <path class="flecha" d="M260,209 L260,230"/>
+          </svg>
+          <p class="diagrama__pie">Cada módulo hace una sola cosa; <code>pipelines.py</code> (Pipeline de scikit-learn con StandardScaler) es el que terminan consumiendo búsqueda, exportación y notebooks por igual.</p>
+        </div>
+        <div>
+          <p><code>desde_cero.py</code> reimplementa Naive Bayes, MLP y Proceso Gaussiano en NumPy
+          puro, sin scikit-learn, solo para verificar la matemática: gradientes comprobados por
+          diferencias finitas, y una comparación numérica directa contra el modelo de scikit-learn
+          con el mismo kernel fijo.</p>
+          <p><code>datos.py</code> también construye el experimento de sensibilidad a atípicos
+          (<code>contaminar_outliers</code>) que pide la sección 6 del plan: mismo dataset, una
+          fracción de puntos corrompidos, mismo protocolo de evaluación.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 03 ------------------------------------------------------------- -->
+  <article class="entrada">
+    <div class="entrada__numero">03<small>pruebas</small></div>
+    <div class="entrada__cuerpo">
+      <h2>19 pruebas antes de confiar en un solo número</h2>
+      <p>Antes de entrenar nada en serio, el equipo escribió pruebas que fallan si algo del
+      protocolo se rompe en silencio: fuga de datos entre entrenamiento y prueba, divergencia
+      entre la matemática de NumPy y scikit-learn, y paridad entre el modelo original y su export
+      a ONNX.</p>
+      <div class="diagrama">
+        <table class="tabla-parametros">
+          <thead><tr><th>archivo</th><th>qué verifica</th><th>pruebas</th></tr></thead>
+          <tbody>
+            <tr><td>test_datos.py</td><td>particiones estratificadas, sin solape train/test, semilla reproducible</td><td>5</td></tr>
+            <tr><td>test_desde_cero.py</td><td>NumPy vs. scikit-learn (NB, MLP con gradiente comprobado, GPR con mismo kernel)</td><td>6</td></tr>
+            <tr><td>test_pipelines_y_metricas.py</td><td>métricas de clasificación/regresión, NLPD, cobertura del intervalo, bootstrap</td><td>5</td></tr>
+            <tr><td>test_exportar_onnx.py</td><td>paridad numérica Python ↔ ONNX Runtime en los 6 modelos</td><td>3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="terminal-bloque">
+<span class="linea-prompt">$</span> pytest -q
+<span class="linea-ok">19 passed in 7.84s</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 ------------------------------------------------------------- -->
+  <article class="entrada">
+    <div class="entrada__numero">04<small>entrenar</small></div>
+    <div class="entrada__cuerpo">
+      <h2>Entrenar, exportar a ONNX y registrar con su hash</h2>
+      <p><code>python -m familia3.todo</code> es el único comando que entrena los seis modelos,
+      los exporta, prueba que el .onnx responde igual que el modelo de Python, y escribe
+      <code>models/registry.json</code> con versión, SHA-256 y métricas de cada uno. La web nunca
+      lee un número escrito a mano: lee ese registro.</p>
+      <div class="diagrama">
+        <svg viewBox="0 0 980 140" role="img" aria-label="Flujo de entrenamiento a publicación">
+          <style>
+            .nodo{fill:var(--papel);stroke:var(--borde);stroke-width:1.2;}
+            .nodo-senal{fill:var(--papel);stroke:var(--senal);stroke-width:1.5;}
+            .et{font-family:var(--mono);font-size:12px;fill:var(--tinta);text-anchor:middle;}
+            .fl{stroke:var(--tinta-suave);stroke-width:1.3;fill:none;marker-end:url(#p2);}
+          </style>
+          <defs><marker id="p2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--tinta-suave)"/></marker></defs>
+          <rect class="nodo" x="10" y="45" width="140" height="48"/>
+          <text class="et" x="80" y="73">scikit-learn</text>
+          <rect class="nodo" x="190" y="45" width="140" height="48"/>
+          <text class="et" x="260" y="73">skl2onnx</text>
+          <rect class="nodo-senal" x="370" y="45" width="150" height="48"/>
+          <text class="et" x="445" y="68">registry.json</text>
+          <text class="et" x="445" y="83" style="font-size:9px;">versión · SHA-256</text>
+          <rect class="nodo" x="560" y="45" width="130" height="48"/>
+          <text class="et" x="625" y="73">dist/</text>
+          <rect class="nodo" x="730" y="10" width="230" height="48"/>
+          <text class="et" x="845" y="38">verifica hash</text>
+          <rect class="nodo-senal" x="730" y="78" width="230" height="48"/>
+          <text class="et" x="845" y="106">ONNX Runtime Web</text>
+          <path class="fl" d="M150,69 L190,69"/>
+          <path class="fl" d="M330,69 L370,69"/>
+          <path class="fl" d="M520,69 L560,69"/>
+          <path class="fl" d="M690,69 Q710,50 730,34"/>
+          <path class="fl" d="M690,69 Q710,90 730,102"/>
+        </svg>
+        <p class="diagrama__pie">Si el hash descargado en el navegador no coincide con el del registro, el modelo se rechaza — lo comprueba <code>verificar_release.py</code> en cada ejecución de CI.</p>
+      </div>
+
+      <table class="tabla-parametros" style="margin-top:1.1rem;">
+        <thead><tr><th>modelo</th><th>dataset</th><th>métrica principal</th><th>diferencia Python↔ONNX</th></tr></thead>
+        <tbody>
+          <tr><td>nb_cancer</td><td>Breast Cancer (30 attr.)</td><td>ROC-AUC 0.988 · F1 0.952</td><td>4.2 × 10⁻⁷</td></tr>
+          <tr><td>mlp_cancer</td><td>Breast Cancer (30 attr.)</td><td>ROC-AUC 0.993 · F1 0.959</td><td>8.8 × 10⁻⁸</td></tr>
+          <tr><td>gpr_diabetes</td><td>Diabetes (10 attr.)</td><td>R² 0.510 · RMSE 50.9</td><td>7.5 × 10⁻⁶</td></tr>
+          <tr><td>gpr_seno1d</td><td>f(x) = sin(x) + ruido</td><td>R² 0.901 · RMSE 0.146</td><td>4.2 × 10⁻⁵</td></tr>
+        </tbody>
+      </table>
+
+      <div class="nota-tecnica">
+        <strong>Lo que falló primero:</strong> <code>skl2onnx</code> no logra exportar un
+        <code>GaussianProcessRegressor</code> con <code>normalize_y=True</code> y
+        <code>return_std=True</code> a la vez (revienta dentro de un operador interno,
+        <code>OnnxMul</code>). Con la normalización activada, <code>gpr_diabetes</code> daba
+        R² = −3.91: el optimizador del kernel convergía a un mínimo degenerado donde el modelo
+        solo predecía el promedio. La solución fue estandarizar el objetivo a mano antes de
+        entrenar y guardar <code>y_offset</code>/<code>y_scale</code> en el registro — la web
+        deshace esa transformación igual que lee cualquier otro dato del modelo. Con eso, R² subió
+        a 0.510.
+      </div>
+    </div>
+  </article>
+
+  <!-- 05 ------------------------------------------------------------- -->
+  <article class="entrada">
+    <div class="entrada__numero">05<small>notebooks</small></div>
+    <div class="entrada__cuerpo">
+      <h2>Cinco notebooks, cada uno con una pregunta distinta</h2>
+      <p>Ejecutados de punta a punta con <code>jupyter nbconvert --execute --inplace</code>, sin
+      celdas con error. No repiten el mismo análisis con otro dataset: cada uno responde algo que
+      los anteriores no cubren.</p>
+      <ul class="lista-notebooks">
+        <li><code>01</code><span>Datos y protocolo: partición 80/20 estratificada, por qué el 20% de prueba no se toca hasta el final.</span></li>
+        <li><code>02</code><span>Naive Bayes Gaussiano: fronteras cuadráticas, búsqueda de <code>var_smoothing</code>, sensibilidad a atípicos.</span></li>
+        <li><code>03</code><span>MLP: curvas de aprendizaje, efecto del escalado, comparación de arquitecturas por RandomizedSearchCV.</span></li>
+        <li><code>04</code><span>Proceso Gaussiano: bandas de incertidumbre, NLPD, cobertura del intervalo, el hueco deliberado en los datos 1D.</span></li>
+        <li><code>05</code><span>Comparativo: prueba de McNemar entre NB y MLP sobre el mismo conjunto de prueba, aplicaciones prácticas de cada familia.</span></li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- 06 ------------------------------------------------------------- -->
+  <article class="entrada">
+    <div class="entrada__numero">06<small>sitio</small></div>
+    <div class="entrada__cuerpo">
+      <h2>Un sitio que consume los modelos, no que los simula</h2>
+      <p>La web no reimplementa Naive Bayes ni el MLP en JavaScript: descarga el <code>.onnx</code>
+      real, verifica su SHA-256 contra el registro y lo ejecuta con ONNX Runtime Web, enteramente
+      en tu navegador. Cinco pestañas: Naive Bayes, MLP, Proceso Gaussiano, Comparativo y Teoría.</p>
+      <div class="entrada__layout entrada__layout--inversa">
+        <div class="diagrama">
+          <svg viewBox="0 0 460 260" role="img" aria-label="Carga y verificación de un modelo en el navegador">
+            <style>
+              .n{fill:var(--papel);stroke:var(--borde);stroke-width:1.2;}
+              .ns{fill:var(--papel);stroke:var(--senal);stroke-width:1.5;}
+              .t{font-family:var(--mono);font-size:11px;fill:var(--tinta);}
+              .f{stroke:var(--tinta-suave);stroke-width:1.2;fill:none;marker-end:url(#p3);}
+            </style>
+            <defs><marker id="p3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--tinta-suave)"/></marker></defs>
+            <rect class="n" x="30" y="10" width="220" height="38"/>
+            <text class="t" x="42" y="34">fetch registry.json</text>
+            <path class="f" d="M140,48 L140,78"/>
+            <rect class="n" x="30" y="78" width="220" height="38"/>
+            <text class="t" x="42" y="102">descargar modelo.onnx</text>
+            <path class="f" d="M140,116 L140,146"/>
+            <rect class="ns" x="30" y="146" width="220" height="38"/>
+            <text class="t" x="42" y="170">SHA-256 calculado = registro ?</text>
+            <path class="f" d="M140,184 L140,214"/>
+            <rect class="n" x="30" y="214" width="220" height="38"/>
+            <text class="t" x="42" y="238">InferenceSession.run()</text>
+          </svg>
+          <p class="diagrama__pie">Se puede fijar una versión exacta con <code>?version=nb_cancer:v1</code> en la URL, para reproducir un resultado anterior del registro.</p>
+        </div>
+        <div>
+          <p>Un detalle que costó encontrar: al comparar Naive Bayes y MLP a la vez en la pestaña
+          Comparativo, lanzar las dos inferencias con <code>Promise.all</code> rompía ONNX Runtime
+          Web (<code>TypeError</code> dentro de su propio código). Dos sesiones distintas no se
+          pueden correr en paralelo de forma segura con el backend wasm; la solución fue consultar
+          una sesión a la vez, con <code>await</code> secuencial.</p>
+          <p>En la pestaña de Proceso Gaussiano, la banda de incertidumbre (media ± 2σ) se ensancha
+          visiblemente justo en el hueco que <code>sintetico_seno1d</code> deja a propósito entre
+          3 y 5 — el modelo admite, de forma honesta, que ahí no vio datos.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 07 ------------------------------------------------------------- -->
+  <article class="entrada">
+    <div class="entrada__numero">07<small>ci</small></div>
+    <div class="entrada__cuerpo">
+      <h2>Integración continua: que nadie rompa el registro sin darse cuenta</h2>
+      <p><code>.github/workflows/ci.yml</code> corre en cada push: instala dependencias, corre las
+      19 pruebas, reentrena y republica los seis modelos, y verifica que el registro siga siendo
+      consistente antes de subir <code>dist/</code> como artefacto descargable.</p>
+      <div class="diagrama">
+        <svg viewBox="0 0 980 100" role="img" aria-label="Pasos del workflow de GitHub Actions">
+          <style>
+            .n{fill:var(--papel);stroke:var(--borde);stroke-width:1.2;}
+            .t{font-family:var(--mono);font-size:11px;fill:var(--tinta);text-anchor:middle;}
+            .f{stroke:var(--tinta-suave);stroke-width:1.2;fill:none;marker-end:url(#p4);}
+          </style>
+          <defs><marker id="p4" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--tinta-suave)"/></marker></defs>
+          <rect class="n" x="10" y="25" width="150" height="40"/><text class="t" x="85" y="49">checkout + pip install</text>
+          <rect class="n" x="200" y="25" width="140" height="40"/><text class="t" x="270" y="49">pytest -q</text>
+          <rect class="n" x="380" y="25" width="150" height="40"/><text class="t" x="455" y="49">familia3.todo</text>
+          <rect class="n" x="570" y="25" width="190" height="40"/><text class="t" x="665" y="49">verificar_release</text>
+          <rect class="n" x="800" y="25" width="170" height="40"/><text class="t" x="885" y="49">subir dist/ (artefacto)</text>
+          <path class="f" d="M160,45 L200,45"/>
+          <path class="f" d="M340,45 L380,45"/>
+          <path class="f" d="M530,45 L570,45"/>
+          <path class="f" d="M760,45 L800,45"/>
+        </svg>
+      </div>
+    </div>
+  </article>
+
+  <!-- 08 ------------------------------------------------------------- -->
+  <article class="entrada">
+    <div class="entrada__numero">08<small>github</small></div>
+    <div class="entrada__cuerpo">
+      <h2>Subir el trabajo al repositorio del equipo</h2>
+      <p>El primer intento de <code>git push</code> fue rechazado (403): la cuenta usada para
+      trabajar no tenía permiso de escritura sobre <code>Calamar49/Comparativo-de-Familias</code>.
+      Se resolvió sumándola como colaboradora del repositorio en vez de forkear — así el historial
+      queda en un solo lugar, el del equipo.</p>
+      <div class="terminal-bloque">
+<span class="linea-prompt">$</span> git add -A
+<span class="linea-prompt">$</span> git commit -m "Desarrollar Fases A-E del plan de trabajo: NB/MLP/GPR, ONNX y sitio web"
+[main f1cea38] Desarrollar Fases A-E del plan de trabajo: NB/MLP/GPR, ONNX y sitio web
+ 60 files changed, 6972 insertions(+), 5 deletions(-)
+<span class="linea-prompt">$</span> git push origin main
+To https://github.com/Calamar49/Comparativo-de-Familias.git
+   <span class="linea-ok">bd96946..f1cea38  main -&gt; main</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 09 ------------------------------------------------------------- -->
+  <article class="entrada">
+    <div class="entrada__numero">09<small>netlify</small></div>
+    <div class="entrada__cuerpo">
+      <h2>Desplegar: arrastrar <code>dist/</code> y listo</h2>
+      <p>Sin paso de compilación: <code>netlify.toml</code> solo fija <code>publish = "dist"</code>.
+      El equipo generó <code>dist/</code> localmente con <code>python -m familia3.todo</code> y la
+      arrastró a un sitio nuevo de Netlify. El sitio quedó publicado en:</p>
+      <p class="resultado-destacado"><a href="https://comparador-familias.netlify.app/" target="_blank" rel="noopener">https://comparador-familias.netlify.app/</a></p>
+      <p>Ahí corren los mismos seis modelos, con la misma verificación de hash que en local — nada
+      se procesa en un servidor.</p>
+    </div>
+  </article>
+
+</main>
+
+<div class="cierre">
+  <div class="tarjeta">
+    <a href="index.html">↳ Volver al simulador</a>
+    <a href="https://github.com/Calamar49/Comparativo-de-Familias" target="_blank" rel="noopener">Repositorio en GitHub ↗</a>
+    <a href="../informe/INFORME_TECNICO.md" target="_blank" rel="noopener">Informe técnico ↗</a>
+    <a href="https://comparador-familias.netlify.app/" target="_blank" rel="noopener">Sitio en producción ↗</a>
+  </div>
+</div>
+
+<footer class="pie">
+  <p>Bitácora de construcción — Familia 3, Equipo 5. Todas las cifras de esta página se leen de <code>models/registry.json</code>, el mismo registro que consume el simulador.</p>
+</footer>
+
+</body>
+</html>

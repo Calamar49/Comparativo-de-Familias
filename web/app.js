@@ -439,7 +439,7 @@ async function inicializarComparativo() {
 // Navegación entre pestañas
 // ---------------------------------------------------------------------------
 function inicializarNavegacion() {
-  const botones = document.querySelectorAll(".pestanas__btn");
+  const botones = document.querySelectorAll(".pestanas__btn:not(.pestanas__link)");
   botones.forEach((boton) => {
     boton.addEventListener("click", () => {
       botones.forEach((b) => b.removeAttribute("aria-current"));
