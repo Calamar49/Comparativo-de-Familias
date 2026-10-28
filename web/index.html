@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparativo de familias &middot; NB · MLP · GPR</title>
+<meta name="description" content="Tres modelos entrenados en Python, consumidos en el navegador: Naive Bayes Gaussiano, Perceptrón Multicapa y Proceso Gaussiano.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 fill=%22%23f4f1ea%22/><path d=%22M3 18 L8 9 L13 14 L21 4%22 stroke=%22%23c1440e%22 stroke-width=%222%22 fill=%22none%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.19.2/dist/ort.min.js"></script>
+</head>
+<body>
+
+<header class="cabecera">
+  <div class="cabecera__marca">
+    <span class="cabecera__indice" id="indice-registro">registro —</span>
+    <h1>Cuaderno de modelos<br><span class="cabecera__sub">Familia 3 · probabilísticos y redes multicapa</span></h1>
+  </div>
+  <nav class="pestanas" id="nav-pestanas" aria-label="Secciones">
+    <button data-vista="nb" class="pestanas__btn" aria-current="page">Naive&nbsp;Bayes</button>
+    <button data-vista="mlp" class="pestanas__btn">MLP</button>
+    <button data-vista="gpr" class="pestanas__btn">Proceso&nbsp;Gaussiano</button>
+    <button data-vista="comparativo" class="pestanas__btn">Comparativo</button>
+    <button data-vista="teoria" class="pestanas__btn">Teoría</button>
+  </nav>
+</header>
+
+<div class="insignia-carga" id="insignia-carga">
+  <span class="insignia-carga__punto"></span>
+  <span id="insignia-carga__texto">Leyendo registry.json…</span>
+</div>
+
+<main id="main">
+
+  <!-- ============ NAIVE BAYES ============ -->
+  <section class="vista" id="vista-nb" data-vista="nb">
+    <div class="vista__cabecera">
+      <h2>Naive Bayes Gaussiano</h2>
+      <p class="vista__nota">Estima medias y varianzas por clase y aplica Bayes asumiendo atributos independientes. Entrenamiento instantáneo; probabilidades que tienden a 0 o 1 cuando los atributos están correlacionados, como en este dataset.</p>
+      <span class="chip-modelo" id="chip-nb_cancer">nb_cancer —</span>
+    </div>
+
+    <div class="panel-doble">
+      <div class="tarjeta">
+        <h3>Diagnóstico sobre un caso de prueba</h3>
+        <p class="tarjeta__ayuda">Breast Cancer Wisconsin, 30 atributos. Elige un caso o ajusta los 4 más influyentes.</p>
+        <div class="selector-caso">
+          <label for="nb-caso">Caso de prueba</label>
+          <select id="nb-caso"></select>
+        </div>
+        <div id="nb-deslizadores" class="deslizadores"></div>
+        <div class="resultado-prediccion" id="nb-resultado">
+          <div class="resultado-prediccion__barra"><div id="nb-barra" class="resultado-prediccion__relleno"></div></div>
+          <div class="resultado-prediccion__texto" id="nb-texto">—</div>
+        </div>
+      </div>
+
+      <div class="tarjeta">
+        <h3>Frontera y mapa de probabilidad (make_moons)</h3>
+        <p class="tarjeta__ayuda">El modelo <code>nb_moons</code> consultado sobre una malla 2D. Observa la frontera cuadrática: NB no puede doblarse alrededor de los dos semicírculos.</p>
+        <canvas id="nb-canvas" width="460" height="380" class="lienzo"></canvas>
+      </div>
+    </div>
+
+    <div class="tarjeta tarjeta--ancha">
+      <h3>Medias y varianzas por clase (leídas del registro)</h3>
+      <div id="nb-parametros" class="tabla-parametros">Cargando…</div>
+    </div>
+  </section>
+
+  <!-- ============ MLP ============ -->
+  <section class="vista" id="vista-mlp" data-vista="mlp" hidden>
+    <div class="vista__cabecera">
+      <h2>Perceptrón multicapa (MLP)</h2>
+      <p class="vista__nota">Backpropagation con softmax y entropía cruzada. Captura fronteras no lineales a costa de interpretabilidad; sensible a la escala de los datos (el escalado va dentro del .onnx).</p>
+      <span class="chip-modelo" id="chip-mlp_cancer">mlp_cancer —</span>
+    </div>
+
+    <div class="panel-doble">
+      <div class="tarjeta">
+        <h3>Diagnóstico sobre un caso de prueba</h3>
+        <div class="selector-caso">
+          <label for="mlp-caso">Caso de prueba</label>
+          <select id="mlp-caso"></select>
+        </div>
+        <div id="mlp-deslizadores" class="deslizadores"></div>
+        <div class="resultado-prediccion" id="mlp-resultado">
+          <div class="resultado-prediccion__barra"><div id="mlp-barra" class="resultado-prediccion__relleno"></div></div>
+          <div class="resultado-prediccion__texto" id="mlp-texto">—</div>
+        </div>
+      </div>
+
+      <div class="tarjeta">
+        <h3>Frontera y mapa de probabilidad (make_moons)</h3>
+        <p class="tarjeta__ayuda">El modelo <code>mlp_moons</code> dobla la frontera alrededor de los dos semicírculos.</p>
+        <canvas id="mlp-canvas" width="460" height="380" class="lienzo"></canvas>
+      </div>
+    </div>
+
+    <div class="tarjeta tarjeta--ancha">
+      <h3>Arquitectura e hiperparámetros (del registro, no escritos a mano)</h3>
+      <div id="mlp-arquitectura" class="tabla-parametros">Cargando…</div>
+    </div>
+  </section>
+
+  <!-- ============ GPR ============ -->
+  <section class="vista" id="vista-gpr" data-vista="gpr" hidden>
+    <div class="vista__cabecera">
+      <h2>Regresión por Proceso Gaussiano</h2>
+      <p class="vista__nota">Cada predicción trae su propia incertidumbre: media ± 2σ. La banda crece donde no hay datos de entrenamiento cerca.</p>
+      <span class="chip-modelo" id="chip-gpr_diabetes">gpr_diabetes —</span>
+    </div>
+
+    <div class="panel-doble">
+      <div class="tarjeta">
+        <h3>Progresión de diabetes a un año</h3>
+        <p class="tarjeta__ayuda">10 atributos clínicos estandarizados. Ajusta y observa cómo cambia la incertidumbre.</p>
+        <div id="gpr-deslizadores" class="deslizadores"></div>
+        <div class="resultado-gpr" id="gpr-resultado">media ± 2σ: —</div>
+      </div>
+
+      <div class="tarjeta">
+        <h3>f(x) = sin(x) + ruido — banda de incertidumbre</h3>
+        <p class="tarjeta__ayuda">El modelo <code>gpr_seno1d</code> consultado sobre una malla 1D. Hay un hueco deliberado en los datos de entrenamiento: ahí la banda se ensancha.</p>
+        <canvas id="gpr-canvas" width="460" height="320" class="lienzo"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPARATIVO ============ -->
+  <section class="vista" id="vista-comparativo" data-vista="comparativo" hidden>
+    <div class="vista__cabecera">
+      <h2>El mismo caso, tres lecturas</h2>
+      <p class="vista__nota">Naive Bayes y MLP evaluados en paralelo sobre el mismo paciente, con las métricas de prueba del registro.</p>
+    </div>
+
+    <div class="tarjeta">
+      <div class="selector-caso">
+        <label for="cmp-caso">Caso de prueba</label>
+        <select id="cmp-caso"></select>
+      </div>
+      <div class="comparativo-filas" id="cmp-filas"></div>
+      <p class="aviso">Las probabilidades no están calibradas de la misma forma entre modelos: compara el diagnóstico, no decimales sueltos.</p>
+    </div>
+
+    <div class="tarjeta tarjeta--ancha">
+      <h3>Métricas de prueba (conjunto no tocado hasta el final)</h3>
+      <div id="cmp-metricas" class="tabla-parametros">Cargando…</div>
+    </div>
+  </section>
+
+  <!-- ============ TEORIA ============ -->
+  <section class="vista" id="vista-teoria" data-vista="teoria" hidden>
+    <div class="vista__cabecera">
+      <h2>Las tres ecuaciones</h2>
+      <p class="vista__nota">Formulación de cada modelo. Derivación completa, criterio de optimización y algoritmo en el informe técnico.</p>
+    </div>
+
+    <div class="teoria-grid">
+      <article class="tarjeta">
+        <h3>Naive Bayes Gaussiano</h3>
+        <p class="teoria-eq">ŷ = argmax<sub>k</sub> log P(y=k) + Σ<sub>j</sub> log 𝒩(x<sub>j</sub> ; μ<sub>kj</sub>, σ²<sub>kj</sub>)</p>
+        <p>Solución cerrada por máxima verosimilitud: medias y varianzas por clase y atributo, sin iterar. Supone independencia condicional entre atributos.</p>
+      </article>
+      <article class="tarjeta">
+        <h3>MLP clasificador</h3>
+        <p class="teoria-eq">h(x) = softmax(W₂ σ(W₁x + b₁) + b₂)</p>
+        <p>Entropía cruzada + regularización L2, minimizada por backpropagation (regla de la cadena capa por capa) con Adam o SGD con momento.</p>
+      </article>
+      <article class="tarjeta">
+        <h3>Proceso Gaussiano</h3>
+        <p class="teoria-eq">μ* = K*ᵀ(K+σ²I)⁻¹y &nbsp;·&nbsp; σ*² = k** − K*ᵀ(K+σ²I)⁻¹K*</p>
+        <p>Posterior gaussiana sobre funciones; los hiperparámetros del núcleo se ajustan maximizando la log-verosimilitud marginal. Costo O(n³).</p>
+      </article>
+    </div>
+
+    <div class="tarjeta tarjeta--ancha enlaces-finales">
+      <a href="https://github.com/Calamar49/Comparativo-de-Familias" target="_blank" rel="noopener">Repositorio en GitHub ↗</a>
+      <a href="../informe/" target="_blank" rel="noopener">Informe técnico (PDF) ↗</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <p>Herramienta didáctica — no es un diagnóstico médico. Los modelos corren enteramente en tu navegador con <a href="https://onnxruntime.ai/" target="_blank" rel="noopener">ONNX Runtime Web</a>; nada se envía a un servidor.</p>
+  <p class="pie__version">Puedes fijar una versión con <code>?version=nb_cancer:v1</code> en la URL.</p>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

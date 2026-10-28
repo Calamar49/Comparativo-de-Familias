@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "familia3"
+version = "0.1.0"
+description = "Comparativo de familias de aprendizaje supervisado: Naive Bayes Gaussiano, MLP y Proceso Gaussiano"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

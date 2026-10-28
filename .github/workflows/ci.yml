@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: pytest (fuga, matemática vs sklearn, métricas, paridad ONNX)
+        run: pytest -q
+
+      - name: Entrenar, exportar a ONNX y registrar modelos
+        run: python -m familia3.todo
+
+      - name: Verificar release (hashes, nada escrito a mano en la web)
+        run: python -m familia3.verificar_release
+
+      - name: Subir dist/ como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitio-dist
+          path: dist/

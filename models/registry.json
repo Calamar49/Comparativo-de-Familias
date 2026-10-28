@@ -1,0 +1,1276 @@
+{
+  "modelos": {
+    "nb_cancer": {
+      "versiones": [
+        {
+          "version": "v1",
+          "archivo": "nb_cancer.onnx",
+          "sha256": "aab6bb0634783bfa10c5537c47fa22a9261210aae958e8cf20dbaef9e403c24a",
+          "descripcion": "Naive Bayes Gaussiano sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9452054794520548,
+            "recall": 0.9583333333333334,
+            "f1": 0.9517241379310345,
+            "roc_auc": 0.9877645502645502,
+            "log_loss": 0.37125554670251204,
+            "brier": 0.0486217008298643
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "diferencia_paridad_onnx": 4.1768677527809217e-07,
+          "fecha": "2026-10-28T15:43:16+00:00"
+        },
+        {
+          "version": "v2",
+          "archivo": "nb_cancer.onnx",
+          "sha256": "aab6bb0634783bfa10c5537c47fa22a9261210aae958e8cf20dbaef9e403c24a",
+          "descripcion": "Naive Bayes Gaussiano sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9452054794520548,
+            "recall": 0.9583333333333334,
+            "f1": 0.9517241379310345,
+            "roc_auc": 0.9877645502645502,
+            "log_loss": 0.37125554670251204,
+            "brier": 0.0486217008298643
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "y_offset": 0.0,
+          "diferencia_paridad_onnx": 4.1768677527809217e-07,
+          "fecha": "2026-10-28T15:44:03+00:00"
+        },
+        {
+          "version": "v3",
+          "archivo": "nb_cancer.onnx",
+          "sha256": "aab6bb0634783bfa10c5537c47fa22a9261210aae958e8cf20dbaef9e403c24a",
+          "descripcion": "Naive Bayes Gaussiano sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9452054794520548,
+            "recall": 0.9583333333333334,
+            "f1": 0.9517241379310345,
+            "roc_auc": 0.9877645502645502,
+            "log_loss": 0.37125554670251204,
+            "brier": 0.0486217008298643
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 4.1768677527809217e-07,
+          "fecha": "2026-10-28T15:45:06+00:00"
+        },
+        {
+          "version": "v4",
+          "archivo": "nb_cancer.onnx",
+          "sha256": "aab6bb0634783bfa10c5537c47fa22a9261210aae958e8cf20dbaef9e403c24a",
+          "descripcion": "Naive Bayes Gaussiano sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9452054794520548,
+            "recall": 0.9583333333333334,
+            "f1": 0.9517241379310345,
+            "roc_auc": 0.9877645502645502,
+            "log_loss": 0.37125554670251204,
+            "brier": 0.0486217008298643
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 4.1768677527809217e-07,
+          "fecha": "2026-10-28T15:48:41+00:00"
+        },
+        {
+          "version": "v5",
+          "archivo": "nb_cancer.onnx",
+          "sha256": "aab6bb0634783bfa10c5537c47fa22a9261210aae958e8cf20dbaef9e403c24a",
+          "descripcion": "Naive Bayes Gaussiano sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9452054794520548,
+            "recall": 0.9583333333333334,
+            "f1": 0.9517241379310345,
+            "roc_auc": 0.9877645502645502,
+            "log_loss": 0.37125554670251204,
+            "brier": 0.0486217008298643
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 4.1768677527809217e-07,
+          "fecha": "2026-10-28T15:57:05+00:00"
+        }
+      ],
+      "version_vigente": "v5"
+    },
+    "mlp_cancer": {
+      "versiones": [
+        {
+          "version": "v1",
+          "archivo": "mlp_cancer.onnx",
+          "sha256": "b35a1356b0d5ceea78c2b480d6b001909814e9fb1de1f1dd4f76a8101a744696",
+          "descripcion": "MLP (con escalado) sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9459459459459459,
+            "recall": 0.9722222222222222,
+            "f1": 0.958904109589041,
+            "roc_auc": 0.9927248677248678,
+            "log_loss": 0.1892059801858163,
+            "brier": 0.0485195068888279
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              64,
+              32
+            ],
+            "activation": "relu",
+            "alpha": 0.0001
+          },
+          "diferencia_paridad_onnx": 8.772458637285041e-08,
+          "fecha": "2026-10-28T15:43:16+00:00"
+        },
+        {
+          "version": "v2",
+          "archivo": "mlp_cancer.onnx",
+          "sha256": "b35a1356b0d5ceea78c2b480d6b001909814e9fb1de1f1dd4f76a8101a744696",
+          "descripcion": "MLP (con escalado) sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9459459459459459,
+            "recall": 0.9722222222222222,
+            "f1": 0.958904109589041,
+            "roc_auc": 0.9927248677248678,
+            "log_loss": 0.1892059801858163,
+            "brier": 0.0485195068888279
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              64,
+              32
+            ],
+            "activation": "relu",
+            "alpha": 0.0001
+          },
+          "y_offset": 0.0,
+          "diferencia_paridad_onnx": 8.772458637285041e-08,
+          "fecha": "2026-10-28T15:44:03+00:00"
+        },
+        {
+          "version": "v3",
+          "archivo": "mlp_cancer.onnx",
+          "sha256": "b35a1356b0d5ceea78c2b480d6b001909814e9fb1de1f1dd4f76a8101a744696",
+          "descripcion": "MLP (con escalado) sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9459459459459459,
+            "recall": 0.9722222222222222,
+            "f1": 0.958904109589041,
+            "roc_auc": 0.9927248677248678,
+            "log_loss": 0.1892059801858163,
+            "brier": 0.0485195068888279
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              64,
+              32
+            ],
+            "activation": "relu",
+            "alpha": 0.0001
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 8.772458637285041e-08,
+          "fecha": "2026-10-28T15:45:06+00:00"
+        },
+        {
+          "version": "v4",
+          "archivo": "mlp_cancer.onnx",
+          "sha256": "b35a1356b0d5ceea78c2b480d6b001909814e9fb1de1f1dd4f76a8101a744696",
+          "descripcion": "MLP (con escalado) sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9459459459459459,
+            "recall": 0.9722222222222222,
+            "f1": 0.958904109589041,
+            "roc_auc": 0.9927248677248678,
+            "log_loss": 0.1892059801858163,
+            "brier": 0.0485195068888279
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              64,
+              32
+            ],
+            "activation": "relu",
+            "alpha": 0.0001
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 8.772458637285041e-08,
+          "fecha": "2026-10-28T15:48:41+00:00"
+        },
+        {
+          "version": "v5",
+          "archivo": "mlp_cancer.onnx",
+          "sha256": "b35a1356b0d5ceea78c2b480d6b001909814e9fb1de1f1dd4f76a8101a744696",
+          "descripcion": "MLP (con escalado) sobre Breast Cancer Wisconsin",
+          "dataset": "breast_cancer",
+          "seed": 42,
+          "entrada": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "salida": [
+            "malignant",
+            "benign"
+          ],
+          "metricas": {
+            "precision": 0.9459459459459459,
+            "recall": 0.9722222222222222,
+            "f1": 0.958904109589041,
+            "roc_auc": 0.9927248677248678,
+            "log_loss": 0.1892059801858163,
+            "brier": 0.0485195068888279
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              64,
+              32
+            ],
+            "activation": "relu",
+            "alpha": 0.0001
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 8.772458637285041e-08,
+          "fecha": "2026-10-28T15:57:05+00:00"
+        }
+      ],
+      "version_vigente": "v5"
+    },
+    "nb_moons": {
+      "versiones": [
+        {
+          "version": "v1",
+          "archivo": "nb_moons.onnx",
+          "sha256": "e6f2d13fb80c7b2b13d0a4467d8d96ec75e2621a2a24b0edfa1061d79bafe110",
+          "descripcion": "Naive Bayes Gaussiano sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.95,
+            "recall": 0.95,
+            "f1": 0.95,
+            "roc_auc": 0.985,
+            "log_loss": 0.18375983070163543,
+            "brier": 0.05051097269522133
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "diferencia_paridad_onnx": 2.834989657474196e-07,
+          "fecha": "2026-10-28T15:43:16+00:00"
+        },
+        {
+          "version": "v2",
+          "archivo": "nb_moons.onnx",
+          "sha256": "e6f2d13fb80c7b2b13d0a4467d8d96ec75e2621a2a24b0edfa1061d79bafe110",
+          "descripcion": "Naive Bayes Gaussiano sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.95,
+            "recall": 0.95,
+            "f1": 0.95,
+            "roc_auc": 0.985,
+            "log_loss": 0.18375983070163543,
+            "brier": 0.05051097269522133
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "y_offset": 0.0,
+          "diferencia_paridad_onnx": 2.834989657474196e-07,
+          "fecha": "2026-10-28T15:44:03+00:00"
+        },
+        {
+          "version": "v3",
+          "archivo": "nb_moons.onnx",
+          "sha256": "e6f2d13fb80c7b2b13d0a4467d8d96ec75e2621a2a24b0edfa1061d79bafe110",
+          "descripcion": "Naive Bayes Gaussiano sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.95,
+            "recall": 0.95,
+            "f1": 0.95,
+            "roc_auc": 0.985,
+            "log_loss": 0.18375983070163543,
+            "brier": 0.05051097269522133
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 2.834989657474196e-07,
+          "fecha": "2026-10-28T15:45:06+00:00"
+        },
+        {
+          "version": "v4",
+          "archivo": "nb_moons.onnx",
+          "sha256": "e6f2d13fb80c7b2b13d0a4467d8d96ec75e2621a2a24b0edfa1061d79bafe110",
+          "descripcion": "Naive Bayes Gaussiano sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.95,
+            "recall": 0.95,
+            "f1": 0.95,
+            "roc_auc": 0.985,
+            "log_loss": 0.18375983070163543,
+            "brier": 0.05051097269522133
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 2.834989657474196e-07,
+          "fecha": "2026-10-28T15:48:41+00:00"
+        },
+        {
+          "version": "v5",
+          "archivo": "nb_moons.onnx",
+          "sha256": "e6f2d13fb80c7b2b13d0a4467d8d96ec75e2621a2a24b0edfa1061d79bafe110",
+          "descripcion": "Naive Bayes Gaussiano sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.95,
+            "recall": 0.95,
+            "f1": 0.95,
+            "roc_auc": 0.985,
+            "log_loss": 0.18375983070163543,
+            "brier": 0.05051097269522133
+          },
+          "hiperparametros": {
+            "var_smoothing": 1e-09
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 2.834989657474196e-07,
+          "fecha": "2026-10-28T15:57:05+00:00"
+        }
+      ],
+      "version_vigente": "v5"
+    },
+    "mlp_moons": {
+      "versiones": [
+        {
+          "version": "v1",
+          "archivo": "mlp_moons.onnx",
+          "sha256": "4797e8ca5cdafbda7f3d5d03a144f855b33957d19d9a2ea7b84c9f6ed9bb63fe",
+          "descripcion": "MLP sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.9512195121951219,
+            "recall": 0.975,
+            "f1": 0.9629629629629629,
+            "roc_auc": 0.9875,
+            "log_loss": 0.3745695441042992,
+            "brier": 0.104373734680826
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              32,
+              16
+            ],
+            "activation": "relu"
+          },
+          "diferencia_paridad_onnx": 1.0705803077382114e-07,
+          "fecha": "2026-10-28T15:43:16+00:00"
+        },
+        {
+          "version": "v2",
+          "archivo": "mlp_moons.onnx",
+          "sha256": "4797e8ca5cdafbda7f3d5d03a144f855b33957d19d9a2ea7b84c9f6ed9bb63fe",
+          "descripcion": "MLP sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.9512195121951219,
+            "recall": 0.975,
+            "f1": 0.9629629629629629,
+            "roc_auc": 0.9875,
+            "log_loss": 0.3745695441042992,
+            "brier": 0.104373734680826
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              32,
+              16
+            ],
+            "activation": "relu"
+          },
+          "y_offset": 0.0,
+          "diferencia_paridad_onnx": 1.0705803077382114e-07,
+          "fecha": "2026-10-28T15:44:03+00:00"
+        },
+        {
+          "version": "v3",
+          "archivo": "mlp_moons.onnx",
+          "sha256": "4797e8ca5cdafbda7f3d5d03a144f855b33957d19d9a2ea7b84c9f6ed9bb63fe",
+          "descripcion": "MLP sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.9512195121951219,
+            "recall": 0.975,
+            "f1": 0.9629629629629629,
+            "roc_auc": 0.9875,
+            "log_loss": 0.3745695441042992,
+            "brier": 0.104373734680826
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              32,
+              16
+            ],
+            "activation": "relu"
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 1.0705803077382114e-07,
+          "fecha": "2026-10-28T15:45:06+00:00"
+        },
+        {
+          "version": "v4",
+          "archivo": "mlp_moons.onnx",
+          "sha256": "4797e8ca5cdafbda7f3d5d03a144f855b33957d19d9a2ea7b84c9f6ed9bb63fe",
+          "descripcion": "MLP sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.9512195121951219,
+            "recall": 0.975,
+            "f1": 0.9629629629629629,
+            "roc_auc": 0.9875,
+            "log_loss": 0.3745695441042992,
+            "brier": 0.104373734680826
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              32,
+              16
+            ],
+            "activation": "relu"
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 1.0705803077382114e-07,
+          "fecha": "2026-10-28T15:48:41+00:00"
+        },
+        {
+          "version": "v5",
+          "archivo": "mlp_moons.onnx",
+          "sha256": "4797e8ca5cdafbda7f3d5d03a144f855b33957d19d9a2ea7b84c9f6ed9bb63fe",
+          "descripcion": "MLP sobre make_moons (frontera 2D)",
+          "dataset": "make_moons",
+          "seed": 42,
+          "entrada": [
+            "x1",
+            "x2"
+          ],
+          "salida": [
+            "0",
+            "1"
+          ],
+          "metricas": {
+            "precision": 0.9512195121951219,
+            "recall": 0.975,
+            "f1": 0.9629629629629629,
+            "roc_auc": 0.9875,
+            "log_loss": 0.3745695441042992,
+            "brier": 0.104373734680826
+          },
+          "hiperparametros": {
+            "hidden_layer_sizes": [
+              32,
+              16
+            ],
+            "activation": "relu"
+          },
+          "y_offset": 0.0,
+          "y_scale": 1.0,
+          "diferencia_paridad_onnx": 1.0705803077382114e-07,
+          "fecha": "2026-10-28T15:57:05+00:00"
+        }
+      ],
+      "version_vigente": "v5"
+    },
+    "gpr_diabetes": {
+      "versiones": [
+        {
+          "version": "v1",
+          "archivo": "gpr_diabetes.onnx",
+          "sha256": "d40dceefbcb38823cc89515eb49cbf6b905bcbf748dd4827b0e79f3e1da66ffe",
+          "descripcion": "Proceso Gaussiano (núcleo Matérn) sobre Diabetes",
+          "dataset": "diabetes",
+          "seed": 42,
+          "entrada": [
+            "age",
+            "sex",
+            "bmi",
+            "bp",
+            "s1",
+            "s2",
+            "s3",
+            "s4",
+            "s5",
+            "s6"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 161.29377014913234,
+            "mae": 143.93584870976153,
+            "r2": -3.9103312860385913
+          },
+          "hiperparametros": {
+            "kernel": "Matern(nu=1.5)+WhiteKernel"
+          },
+          "diferencia_paridad_onnx": 2.22645343228578e-06,
+          "fecha": "2026-10-28T15:43:17+00:00"
+        },
+        {
+          "version": "v2",
+          "archivo": "gpr_diabetes.onnx",
+          "sha256": "8b79a15b43818e8aaa64542b246840f37ca8467cf820129df4fc950977ade272",
+          "descripcion": "Proceso Gaussiano (núcleo Matérn) sobre Diabetes",
+          "dataset": "diabetes",
+          "seed": 42,
+          "entrada": [
+            "age",
+            "sex",
+            "bmi",
+            "bp",
+            "s1",
+            "s2",
+            "s3",
+            "s4",
+            "s5",
+            "s6"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 73.06039375016677,
+            "mae": 63.86214856433381,
+            "r2": -0.007487400945794365
+          },
+          "hiperparametros": {
+            "kernel": "Matern(nu=1.5)+WhiteKernel"
+          },
+          "y_offset": 153.73654390934846,
+          "diferencia_paridad_onnx": 4.961956079796437e-06,
+          "fecha": "2026-10-28T15:44:04+00:00"
+        },
+        {
+          "version": "v3",
+          "archivo": "gpr_diabetes.onnx",
+          "sha256": "dda4d1a4e3e21c0b2f779bc7e91e94024d7aa33bb4b327a037326a5466b567c5",
+          "descripcion": "Proceso Gaussiano (núcleo Matérn) sobre Diabetes",
+          "dataset": "diabetes",
+          "seed": 42,
+          "entrada": [
+            "age",
+            "sex",
+            "bmi",
+            "bp",
+            "s1",
+            "s2",
+            "s3",
+            "s4",
+            "s5",
+            "s6"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 50.93325318153731,
+            "mae": 40.337778850973976,
+            "r2": 0.5103582526904946
+          },
+          "hiperparametros": {
+            "kernel": "Matern(nu=1.5)+WhiteKernel"
+          },
+          "y_offset": 153.73654390934846,
+          "y_scale": 77.9512540821802,
+          "diferencia_paridad_onnx": 7.544647326246379e-06,
+          "fecha": "2026-10-28T15:45:07+00:00"
+        },
+        {
+          "version": "v4",
+          "archivo": "gpr_diabetes.onnx",
+          "sha256": "dda4d1a4e3e21c0b2f779bc7e91e94024d7aa33bb4b327a037326a5466b567c5",
+          "descripcion": "Proceso Gaussiano (núcleo Matérn) sobre Diabetes",
+          "dataset": "diabetes",
+          "seed": 42,
+          "entrada": [
+            "age",
+            "sex",
+            "bmi",
+            "bp",
+            "s1",
+            "s2",
+            "s3",
+            "s4",
+            "s5",
+            "s6"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 50.93325318153731,
+            "mae": 40.337778850973976,
+            "r2": 0.5103582526904946
+          },
+          "hiperparametros": {
+            "kernel": "Matern(nu=1.5)+WhiteKernel"
+          },
+          "y_offset": 153.73654390934846,
+          "y_scale": 77.9512540821802,
+          "diferencia_paridad_onnx": 7.544647326246379e-06,
+          "fecha": "2026-10-28T15:48:42+00:00"
+        },
+        {
+          "version": "v5",
+          "archivo": "gpr_diabetes.onnx",
+          "sha256": "dda4d1a4e3e21c0b2f779bc7e91e94024d7aa33bb4b327a037326a5466b567c5",
+          "descripcion": "Proceso Gaussiano (núcleo Matérn) sobre Diabetes",
+          "dataset": "diabetes",
+          "seed": 42,
+          "entrada": [
+            "age",
+            "sex",
+            "bmi",
+            "bp",
+            "s1",
+            "s2",
+            "s3",
+            "s4",
+            "s5",
+            "s6"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 50.93325318153731,
+            "mae": 40.337778850973976,
+            "r2": 0.5103582526904946
+          },
+          "hiperparametros": {
+            "kernel": "Matern(nu=1.5)+WhiteKernel"
+          },
+          "y_offset": 153.73654390934846,
+          "y_scale": 77.9512540821802,
+          "diferencia_paridad_onnx": 7.544647326246379e-06,
+          "fecha": "2026-10-28T15:57:06+00:00"
+        }
+      ],
+      "version_vigente": "v5"
+    },
+    "gpr_seno1d": {
+      "versiones": [
+        {
+          "version": "v1",
+          "archivo": "gpr_seno1d.onnx",
+          "sha256": "7423290528e569a73c98607e4d01c02a31505af5902ef39f32e6a68aa16de643",
+          "descripcion": "Proceso Gaussiano (núcleo RBF) sobre f(x)=sin(x)+ruido",
+          "dataset": "sintetico_seno1d",
+          "seed": 42,
+          "entrada": [
+            "x"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 0.09800923656611624,
+            "mae": 0.08845370884663599,
+            "r2": 0.9554291625650817
+          },
+          "hiperparametros": {
+            "kernel": "RBF+WhiteKernel"
+          },
+          "diferencia_paridad_onnx": 0.00010380905096255,
+          "fecha": "2026-10-28T15:43:17+00:00"
+        },
+        {
+          "version": "v2",
+          "archivo": "gpr_seno1d.onnx",
+          "sha256": "17cc26df77bcbc2eb305916bb8020468bf15a1871d8e98b4cfae231a605d4b57",
+          "descripcion": "Proceso Gaussiano (núcleo RBF) sobre f(x)=sin(x)+ruido",
+          "dataset": "sintetico_seno1d",
+          "seed": 42,
+          "entrada": [
+            "x"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 0.10188338519448567,
+            "mae": 0.0916761925471743,
+            "r2": 0.9518358927958198
+          },
+          "hiperparametros": {
+            "kernel": "RBF+WhiteKernel"
+          },
+          "y_offset": 0.11447843137771707,
+          "diferencia_paridad_onnx": 7.179892296732548e-05,
+          "fecha": "2026-10-28T15:44:04+00:00"
+        },
+        {
+          "version": "v3",
+          "archivo": "gpr_seno1d.onnx",
+          "sha256": "3d5e06521087b6a2990aa334721f9fb47acfc5ac31309f35b9fd166232e16a47",
+          "descripcion": "Proceso Gaussiano (núcleo RBF) sobre f(x)=sin(x)+ruido",
+          "dataset": "sintetico_seno1d",
+          "seed": 42,
+          "entrada": [
+            "x"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 0.1459440992764419,
+            "mae": 0.12384057457700606,
+            "r2": 0.901169757151004
+          },
+          "hiperparametros": {
+            "kernel": "RBF+WhiteKernel"
+          },
+          "y_offset": 0.11447843137771707,
+          "y_scale": 0.7253519644685874,
+          "diferencia_paridad_onnx": 4.1796012550970874e-05,
+          "fecha": "2026-10-28T15:45:07+00:00"
+        },
+        {
+          "version": "v4",
+          "archivo": "gpr_seno1d.onnx",
+          "sha256": "3d5e06521087b6a2990aa334721f9fb47acfc5ac31309f35b9fd166232e16a47",
+          "descripcion": "Proceso Gaussiano (núcleo RBF) sobre f(x)=sin(x)+ruido",
+          "dataset": "sintetico_seno1d",
+          "seed": 42,
+          "entrada": [
+            "x"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 0.1459440992764419,
+            "mae": 0.12384057457700606,
+            "r2": 0.901169757151004
+          },
+          "hiperparametros": {
+            "kernel": "RBF+WhiteKernel"
+          },
+          "y_offset": 0.11447843137771707,
+          "y_scale": 0.7253519644685874,
+          "diferencia_paridad_onnx": 4.1796012550970874e-05,
+          "fecha": "2026-10-28T15:48:43+00:00"
+        },
+        {
+          "version": "v5",
+          "archivo": "gpr_seno1d.onnx",
+          "sha256": "3d5e06521087b6a2990aa334721f9fb47acfc5ac31309f35b9fd166232e16a47",
+          "descripcion": "Proceso Gaussiano (núcleo RBF) sobre f(x)=sin(x)+ruido",
+          "dataset": "sintetico_seno1d",
+          "seed": 42,
+          "entrada": [
+            "x"
+          ],
+          "salida": [
+            "media",
+            "sigma"
+          ],
+          "metricas": {
+            "rmse": 0.1459440992764419,
+            "mae": 0.12384057457700606,
+            "r2": 0.901169757151004
+          },
+          "hiperparametros": {
+            "kernel": "RBF+WhiteKernel"
+          },
+          "y_offset": 0.11447843137771707,
+          "y_scale": 0.7253519644685874,
+          "diferencia_paridad_onnx": 4.1796012550970874e-05,
+          "fecha": "2026-10-28T15:57:06+00:00"
+        }
+      ],
+      "version_vigente": "v5"
+    }
+  }
+}
