@@ -18,7 +18,7 @@
 |---|---|---|---|
 | Rigor matemático | 35 % | Ecuaciones, pérdida, supuestos y algoritmo de los 3 modelos, con derivaciones y verificación numérica | Informe cap. 2, anexo A, notebooks 01 a 04 |
 | Simulación y código | 35 % | Pipelines sin fuga, búsqueda de hiperparámetros, métricas justificadas, semillas, tests, CI | `src/`, notebooks, `tests/`, informe cap. 3 a 5 |
-| Análisis de aplicaciones | 20 % | Un caso real por modelo + comparación crítica de los 3 | Informe cap. 6 y 7, notebook 05 |
+| Análisis de aplicaciones | 20 % | Un caso real por modelo + comparación crítica de los 3, respaldada con experimentos de atípicos, costo e interpretabilidad | Informe cap. 6 y 7, notebook 05 |
 | Conclusiones y presentación | 10 % | Conclusiones con evidencia, informe pulido, diapositivas y sitio web | Informe cap. 8, diapositivas, web |
 
 Regla del proyecto: **todo requisito del PDF debe poder señalarse con el dedo** (sección, archivo o celda). La sección 8 trae la matriz de trazabilidad.
@@ -141,6 +141,12 @@ Carga, descripción, EDA breve (balance de clases, correlaciones, distribuciones
 ### B5. Notebook 05: comparativo y aplicaciones
 - Tabla final con media ± desviación (varias semillas), intervalos bootstrap y pruebas estadísticas sencillas (McNemar o t pareada) para saber si NB y MLP difieren de verdad.
 - Costo: tiempo de entrenamiento y de predicción, memoria, y escalamiento con n.
+- **Experimento de sensibilidad a valores atípicos** (lo pide el PDF para justificar cada aplicación):
+  - *Protocolo:* sobre el conjunto de **entrenamiento** se contamina una fracción creciente de filas (0 %, 1 %, 2 %, 5 %, 10 %) con atípicos, de dos tipos: (a) atípicos en los atributos (valores multiplicados por 5 a 10 desviaciones estándar) y (b) ruido en la etiqueta o en el objetivo (etiquetas invertidas en clasificación; valores extremos en regresión). El conjunto de prueba **no se contamina**.
+  - *Qué se mide:* ROC-AUC y F1 (NB y MLP) y RMSE y R² (GPR), con 10 semillas y banda de dispersión; curva «degradación frente a % de contaminación» para cada modelo. Para el GPR se compara el núcleo RBF con un ruido fijo frente a Matérn, y se interpreta el efecto sobre la banda de incertidumbre.
+  - *Qué se espera discutir:* NB desplaza medias y varianzas (los atípicos inflan σ²); el MLP puede memorizar el ruido si no hay regularización; el GPR gaussiano es sensible porque el ruido gaussiano no admite colas pesadas. Se menciona como alternativa el proceso con verosimilitud Student-t, sin implementarlo.
+  - *Resultado en el informe:* una figura y una tabla, que respaldan la fila «robustez a atípicos» de la comparación crítica.
+- **Interpretabilidad (evidencia, no solo opinión):** parámetros leídos directamente de NB (medias y varianzas por clase), importancia por permutación en NB y MLP, y longitudes de escala del núcleo (relevancia automática) en el GPR.
 - Discusión de qué modelo elegir según el caso.
 
 ### B6. Reproducibilidad
@@ -210,6 +216,7 @@ Anexos: derivaciones completas · tablas de hiperparámetros probados · enlaces
 | Fronteras de decisión 2D/3D | notebooks 02 y 03, web |
 | Curvas de aprendizaje / importancia de características | notebooks 02 a 04 |
 | Caso de estudio real por modelo y justificación técnica | informe cap. 6 |
+| Justificar por sensibilidad a *outliers*, interpretabilidad y costo computacional | Notebook 05: experimento de atípicos, evidencia de interpretabilidad y curvas de costo; informe cap. 5 y 6 |
 | Comparativa entre los 3 modelos | notebook 05, informe cap. 5 |
 | Informe PDF | `informe/INFORME_TECNICO.pdf` |
 | Código fuente en repositorio | GitHub: Calamar49/Comparativo-de-Familias |
@@ -249,6 +256,7 @@ Reparto sugerido si son 4 personas: una por modelo (NB, MLP, GPR) con su noteboo
 ---
 
 ## 11. Definición de "terminado" (checklist final)
+- [ ] El experimento de atípicos, la evidencia de interpretabilidad y las curvas de costo están en el notebook 05 y en el informe.
 - [ ] Cada modelo tiene: formulación, criterio, algoritmo, supuestos, implementación desde cero verificada, búsqueda de hiperparámetros, métricas, gráficos y caso de uso.
 - [ ] Los 5 notebooks se ejecutan de principio a fin sin errores, con salidas guardadas.
 - [ ] `pytest` y la paridad JS en verde, y CI en verde en GitHub.
